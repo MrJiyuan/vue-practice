@@ -1,19 +1,19 @@
 <!--
  * @ Author: Chr1s
  * @ Create Time: 2023-03-15 13:19:15
- * @ Modified time: 2023-03-16 02:01:51
+ * @ Modified time: 2023-03-16 03:17:06
  * @ Description:
 -->
 
 <template>
     <a-typography-title :level="2">3、ref：</a-typography-title>
     <div>{{ _name }}</div>
-    <a-button type="primary" @click="change">非响应式修改</a-button>
+    <a-button type="primary" @click="change()">非响应式修改</a-button>
 
     <a-divider orientation="left">ref</a-divider>
     <div>{{ _nameRef }}</div>
     <a-space>
-        <a-button type="primary" @click="changeRef">响应式修改</a-button>
+        <a-button type="primary" @click="changeRef()">响应式修改</a-button>
     </a-space>
 
 
@@ -32,13 +32,22 @@
     <a-divider orientation="left">ref和shallowRef在同一函数中使用</a-divider>
     <div>{{ _nameRef }}</div>
     <div>{{ _nameShallowRef }}</div>
-    <a-button type="dashed" @click="changeRefThenShallow">同一函数中修改.value.name</a-button>
+    <a-button type="dashed" @click="changeRefThenShallow()">同一函数中修改.value.name</a-button>
 
     <a-divider orientation="left">triggerRef</a-divider>
     <div>{{ _nameShallowRef }}</div>
-    <a-button type="primary" @click="changeTriggerRef">triggerRef更新ShallowRef</a-button>
+    <a-button type="primary" @click="changeTriggerRef()">triggerRef更新ShallowRef</a-button>
 
     <a-divider orientation="left">customRef</a-divider>
+    <div>{{ customObj }}</div>
+    <a-space>
+        <a-button type="primary" @click="changeCustomRef()">changeCustomRef</a-button>
+        <a-button type="primary" @click="changeDebounceCustomRef()">debounceCustomRef防抖版</a-button>
+    </a-space>
+
+    <a-divider orientation="left">Ref获取dom元素</a-divider>
+    <div ref="domRef">我是dom中的元素</div>
+    <a-button type="primary" @click="getDomRef()">获取dom元素</a-button>
 </template>
 
 <script setup lang='ts'>
@@ -82,7 +91,6 @@ const changeTriggerRef = () => {
     triggerRef(_nameShallowRef)
 }
 
-
 function useCustomRef<T>(value: T) {
     // customRef是一个回调函数
     return customRef((track, trigger) => {
@@ -92,15 +100,50 @@ function useCustomRef<T>(value: T) {
                 return value
             },
             set(newVal) { // 触发依赖
+                console.log('我没有防抖');
                 value = newVal
                 trigger()
             }
         }
     })
 }
+const customObj = useCustomRef<string>('我是自定义Ref')
+const changeCustomRef = () => {
+    customObj.value = '我是被修改后的CustomRef'
+}
 
+// 防抖版CustomRef
+function debounceCustomRef<T>(value: T, delay: number = 200) {
+    let timer: number | undefined;
+    return customRef((track, trigger) => {
+        return {
+            get() {
+                track();        // 收集依赖
+                return value;
+            },
+            set(newValue) {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    console.log('爷的接口有防抖哈哈哈哈');
+                    value = newValue;
+                    trigger();  // 触发依赖
+                }, delay);
+            },
+        };
+    });
+}
+const customDebounceObj = debounceCustomRef<string>('我是自定义防抖Ref', 800)
+const changeDebounceCustomRef = () => {
+    customDebounceObj.value = '我是被修改后的防抖CustomRef'
+    console.log(customDebounceObj);
 
+}
 
+const domRef = ref<HTMLDivElement>() // 此处需要类型断言成HTMLDiv元素，否则value后获取不到相应的属性
+const getDomRef = () => {
+    console.log(domRef.value?.innerHTML);
+
+}
 
 </script>
 <style scoped></style>
