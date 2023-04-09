@@ -1,37 +1,15 @@
 <template>
-  <div class="box">
-    <direct />
-    <twoWayBinding />
-    <refTemplate />
-    <reactiveTemplate />
-    <toTemplate />
-  </div>
+  <layout></layout>
 </template>
 
-<script lang="ts">
-
-import direct from './components/1-direct.vue'
-import twoWayBinding from './components/2-twoWayBinding.vue';
-import refTemplate from './components/3-ref.vue';
-import reactiveTemplate from './components/4-reactive.vue';
-import toTemplate from "./components/5-to.vue";
-export default {
-  name: 'App',
-  components: {
-    direct,
-    twoWayBinding,
-    refTemplate,
-    reactiveTemplate,
-    toTemplate
-  }
-}
-
+<script setup  lang="ts">
+import layout from "./layout/index.vue";
 </script>
-<style>
-.box {
-  width: 500px;
-  margin: 0 auto;
-  padding: 15px;
-  background: #f0f2f5;
+<style lang="less">
+html,
+body,
+#app {
+  height: 100%;
+  overflow: hidden;
 }
 </style>
