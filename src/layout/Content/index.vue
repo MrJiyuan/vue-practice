@@ -39,6 +39,24 @@
                 </template>
             </slotComponent>
             <component :is="dynamicComponents"></component>
+            <!-- 要使用异步组件，必须使用Suspense(vue3新增的内置组件) -->
+            <Suspense>
+                <template #default>
+                    <SyncVue>
+                        <template #default>
+                            <div>我在哪儿</div>
+                        </template>
+                    </SyncVue>
+                </template>
+                <!-- #fallback表示预展示的组件 -->
+                <template #fallback>
+                    <skeleton></skeleton>
+                </template>
+            </Suspense>
+            <keepAlive></keepAlive>
+            <provideComponent></provideComponent>
+            <broData></broData>
+            <imgLazyLoad></imgLazyLoad>
         </div>
 
     </div>
@@ -50,19 +68,27 @@ import {
 } from 'vue'
 import direct from '../../components/1-direct.vue'
 import twoWayBinding from '../../components/2-twoWayBinding.vue';
-import refTemplate from '../../components/3-ref.vue';
-import reactiveTemplate from '../../components/4-reactive.vue';
-import toTemplate from "../../components/5-to.vue";
-import computedTemplate from "../../components/6-computed&watch.vue";
-import lifeCycleTemplate from '../../components/7-lifeCycle.vue'
-import fatherC from '../../components/8-fatherC.vue'
-import treeComponent from '../../components/9-modules.vue'
-import slotComponent from '../../components/10-slot.vue'
-import dynamicComponents from '../../components/11-dynamicComponents.vue';
+import refTemplate from '@/components/3-ref.vue';
+import reactiveTemplate from '@/components/4-reactive.vue';
+import toTemplate from "@/components/5-to.vue";
+import computedTemplate from "@/components/6-computed&watch.vue";
+import lifeCycleTemplate from '@/components/7-lifeCycle.vue'
+import fatherC from '@/components/8-fatherC.vue'
+import treeComponent from '@/components/9-modules.vue'
+import slotComponent from '@/components/10-slot.vue'
+import dynamicComponents from '@/components/11-dynamicComponents.vue';
+import skeleton from '@/components/skeleton.vue'        // 引入骨架屏
+import keepAlive from '@/components/14-keep-alive.vue'  // 引入异步组件
+import { defineAsyncComponent } from 'vue';
+import provideComponent from '@/components/15-provide.vue'
+import broData from '@/components/16-broData.vue'
+import imgLazyLoad from '@/components/17-imgLazyLoad.vue'
 
 let lifeCycleTemplateFlag = ref<Boolean>(false);
 
-
+//使用defineAsyncComponent函数进行一个引入
+//有两种书写风格，一种是直接传一个回调函数，然后通过回调函数继续使用import函数模式(此模式和引入的有所区别，能够写在代码逻辑里面的)
+const SyncVue = defineAsyncComponent(() => import('@/components/12-sync.vue'))//引入异步组件
 </script>
 <style lang="less" scoped>
 .content {

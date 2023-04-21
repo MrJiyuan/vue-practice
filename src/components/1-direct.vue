@@ -1,7 +1,7 @@
 <!--
  * @ Author: Chr1s
  * @ Create Time: 2023-03-11 22:12:53
- * @ Modified time: 2023-03-16 02:05:52
+ * @ Modified time: 2023-04-20 21:44:51
  * @ Description:
  -->
 
@@ -43,13 +43,104 @@
 
   <a-divider orientation="left">v-for</a-divider>
   <!-- v-for -->
-  <a-tag color="#2db7f5" v-for="i in expStringArray">{{ i }}</a-tag><br><br>
+  <a-tag color="#2db7f5" v-for="i in expStringArray">{{ i }}</a-tag>
+  <br>
+  <br>
   <a-tag color="#2db7f5" v-for="(i, j) in expStringArray">{{ j }}-{{ i }}</a-tag>
   <a-typography-paragraph>v-memo:只有里面的条件不成立时才会发生改变，如果条件成立的话它会跳过这个更新，可以节省一定程度的性能↓</a-typography-paragraph>
-  <a-tag color="#2db7f5" v-for="i in expStringArray" v-memo="[i == '抽']">{{ i }}</a-tag><br><br>
+  <a-tag color="#2db7f5" v-for="i in expStringArray" v-memo="[i == '抽']">{{ i }}
+  </a-tag>
+  <br>
+  <br>
+
+  <a-divider orientation="left">自定义指令</a-divider>
+  <a-button @click="flag = !flag">激活指令</a-button>
+  <div class="cusDir" v-move="{ backgroundColor: 'red' }" v-if="flag">
+  </div>
+
+  <a-divider orientation="left">指令-鉴权</a-divider>
+  <!-- 如果匹配到的话就提供按钮权限，匹配不到就进行隐藏 -->
+  <a-button v-has-show="'shop:create'">创建</a-button>
+  <a-button v-has-show="'shop:edit'">编辑</a-button>
+  <a-button v-has-show="'shop:delete'">删除</a-button>
+
+  <a-divider orientation="left">指令-拖拽</a-divider>
+  <div class="moveBox" v-drag>
+    <div class="header">
+
+    </div>
+    <div>内容</div>
+  </div>
 </template>
 
 <script setup lang="ts">
+// ***************自定义指令开始****************
+import { ref } from 'vue'
+import type { Directive, DirectiveBinding } from 'vue'
+
+let flag = ref<boolean>(false)
+type Binding = {
+  backgroundColor: string
+}
+// 自定义组件的命名必须以v开头
+const vMove: Directive = {
+  created() {
+    console.log('v-move指令已创建');
+
+  },
+  mounted(el: HTMLElement, Binding: DirectiveBinding) {
+    console.log('v-move指令已挂载');
+    el.style.backgroundColor = Binding.value.backgroundColor
+  },
+  unmounted() {
+    console.log('v-move指令已卸载');
+  }
+}
+// ***************自定义指令结束****************
+
+// ***************自定义指令-鉴权开始**************** 
+localStorage.setItem('userID', 'linlin')
+// 因为有可能取不到，就断言成string
+const userID = localStorage.getItem('userID') as string
+// 冒充后台返回的数据
+const permission = [
+  // 一个商品页，叫shop，后面跟上他的权限，如edit
+  'linlin:shop:edit',
+  'linlin:shop:create',
+  'linlin:shop:delete'
+]
+// 这个例子中Directive接收两个泛型，一个是元素类型，一个是指令的值类型
+const vHasShow: Directive<HTMLElement, string> = (el, binding) => {
+  if (!permission.includes(userID + ':' + binding.value)) {
+    //   el.style.display = 'inline-block'
+    // } else {
+    el.style.display = 'none'
+  }
+}
+// ***************自定义指令-鉴权结束****************
+
+// ***************自定义拖拽指令开始****************
+const vDrag: Directive<any, void> = (el: HTMLElement, binding: DirectiveBinding) => {
+  // 获取被拖拽的元素
+  let dragElement = el.firstElementChild as HTMLDivElement
+  // 事件触发后触发的回调函数
+  const mouseDown = (e: MouseEvent) => {
+    // 为防止点击后鼠标错位，需要获取鼠标的原始位置
+    let X = e.clientX - el.offsetLeft
+    let Y = e.clientY - el.offsetTop
+    const move = (e: MouseEvent) => {
+      el.style.left = e.clientX - X + 'px'
+      el.style.top = e.clientY - Y + 'px'
+    }
+    document.addEventListener('mousemove', move)
+    document.addEventListener('mouseup', () => {
+      document.removeEventListener('mousemove', move)
+    })
+  }
+  dragElement.addEventListener('mousedown', mouseDown)
+}
+// ***************自定义拖拽指令结束****************
+
 const expArray: number[] = [1, 2, 3, 4, 5, 6, 7]
 const expStringArray: string[] = ['我', '抽', '悦', '刻', '五', '芜', '湖']
 // v-html不支持组件，只支持原生html标签
@@ -72,7 +163,7 @@ let chr1s_obj = {
 const bindId: string = 'bind-Id'
 
 </script>
-<style>
+<style lang="less">
 .bindStyle1 {
   color: aquamarine;
 }
@@ -81,5 +172,26 @@ const bindId: string = 'bind-Id'
   font-weight: 14px;
   border: 1px solid rgb(43, 204, 43);
   margin: 10px 0 10px 0;
+}
+
+.cusDir {
+  width: 100px;
+  height: 100px;
+}
+
+.moveBox {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border: 3px solid #000;
+
+  .header {
+    width: 100%;
+    height: 30px;
+    background-color: #000;
+  }
 }
 </style>
