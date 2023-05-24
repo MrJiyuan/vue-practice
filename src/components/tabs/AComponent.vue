@@ -1,5 +1,5 @@
 <template>
-    <div>这个直播间氛围太好了，就像在恬静的乡下和邻里一起聊家长里短，偶尔还能听到后院的猪叫</div>
+    <div>这个直播间氛围太好了,就像在恬静的乡下和邻里一起聊家长里短,偶尔还能听到后院的猪叫</div>
     <a-form :model="formState" :label-col="labelCol" :wrapper-col="wrapperCol">
         <a-form-item label="Activity name">
             <a-input v-model:value="formState.name" />
@@ -71,7 +71,7 @@ onMounted(() => {
     console.log('初始化')  //这个会随着onActivated一起生效
 })
 onUnmounted(() => {
-    console.log('卸载')  //如果有onDeactivated，则优先生效onDeactivated，onUnMounted则不再生效
+    console.log('卸载')  //如果有onDeactivated,则优先生效onDeactivated,onUnMounted则不再生效
 })
 </script>
 <style scoped></style>

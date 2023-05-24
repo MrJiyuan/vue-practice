@@ -23,7 +23,7 @@ const getName = (name: string) => {
 }
 
 // 3.访问子组件实例中暴露出的属性属性
-// ref的泛型是InstanceType，InstanceType的泛型通过typeof去读取chrildC里面的类型
+// ref的泛型是InstanceType,InstanceType的泛型通过typeof去读取chrildC里面的类型
 const chrildCValue = ref<InstanceType<typeof chrildC>>() // 将子组件实例化
 const getVar = () => console.log(chrildCValue.value?.age);
 

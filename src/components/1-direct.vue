@@ -1,7 +1,7 @@
 <!--
  * @ Author: Chr1s
  * @ Create Time: 2023-03-11 22:12:53
- * @ Modified time: 2023-04-20 21:44:51
+ * @ Modified time: 2023-05-23 22:16:48
  * @ Description:
  -->
 
@@ -9,9 +9,10 @@
   <a-typography-title :level="2">1、模板语法&vue指令：</a-typography-title>
 
   <a-divider orientation="left">模板中使用map</a-divider>
-  <div>
+
+  <a-typography-text code>
     {{ expArray.map(v => ({ num: v })) }}
-  </div>
+  </a-typography-text>
 
   <a-divider orientation="left">v-if & v-html</a-divider>
   <div v-html="expHTML" v-if="expBoolean"></div>
@@ -47,7 +48,11 @@
   <br>
   <br>
   <a-tag color="#2db7f5" v-for="(i, j) in expStringArray">{{ j }}-{{ i }}</a-tag>
-  <a-typography-paragraph>v-memo:只有里面的条件不成立时才会发生改变，如果条件成立的话它会跳过这个更新，可以节省一定程度的性能↓</a-typography-paragraph>
+  <br>
+  <a-typography-text mark>
+    v-memo:只有里面的条件不成立时才会发生改变,如果条件成立的话它会跳过这个更新,可以节省一定程度的性能↓
+  </a-typography-text>
+  <br>
   <a-tag color="#2db7f5" v-for="i in expStringArray" v-memo="[i == '抽']">{{ i }}
   </a-tag>
   <br>
@@ -59,7 +64,7 @@
   </div>
 
   <a-divider orientation="left">指令-鉴权</a-divider>
-  <!-- 如果匹配到的话就提供按钮权限，匹配不到就进行隐藏 -->
+  <!-- 如果匹配到的话就提供按钮权限,匹配不到就进行隐藏 -->
   <a-button v-has-show="'shop:create'">创建</a-button>
   <a-button v-has-show="'shop:edit'">编辑</a-button>
   <a-button v-has-show="'shop:delete'">删除</a-button>
@@ -100,16 +105,16 @@ const vMove: Directive = {
 
 // ***************自定义指令-鉴权开始**************** 
 localStorage.setItem('userID', 'linlin')
-// 因为有可能取不到，就断言成string
+// 因为有可能取不到,就断言成string
 const userID = localStorage.getItem('userID') as string
 // 冒充后台返回的数据
 const permission = [
-  // 一个商品页，叫shop，后面跟上他的权限，如edit
+  // 一个商品页,叫shop,后面跟上他的权限,如edit
   'linlin:shop:edit',
   'linlin:shop:create',
   'linlin:shop:delete'
 ]
-// 这个例子中Directive接收两个泛型，一个是元素类型，一个是指令的值类型
+// 这个例子中Directive接收两个泛型,一个是元素类型,一个是指令的值类型
 const vHasShow: Directive<HTMLElement, string> = (el, binding) => {
   if (!permission.includes(userID + ':' + binding.value)) {
     //   el.style.display = 'inline-block'
@@ -125,7 +130,7 @@ const vDrag: Directive<any, void> = (el: HTMLElement, binding: DirectiveBinding)
   let dragElement = el.firstElementChild as HTMLDivElement
   // 事件触发后触发的回调函数
   const mouseDown = (e: MouseEvent) => {
-    // 为防止点击后鼠标错位，需要获取鼠标的原始位置
+    // 为防止点击后鼠标错位,需要获取鼠标的原始位置
     let X = e.clientX - el.offsetLeft
     let Y = e.clientY - el.offsetTop
     const move = (e: MouseEvent) => {
@@ -143,8 +148,8 @@ const vDrag: Directive<any, void> = (el: HTMLElement, binding: DirectiveBinding)
 
 const expArray: number[] = [1, 2, 3, 4, 5, 6, 7]
 const expStringArray: string[] = ['我', '抽', '悦', '刻', '五', '芜', '湖']
-// v-html不支持组件，只支持原生html标签
-const expHTML: string = '<section style="color:blue">v-if的性能低于v-show,因为v-if是切换真假DOM，v-show是使用css隐藏</section>'
+// v-html不支持组件,只支持原生html标签
+const expHTML: string = '<section style="color:blue">v-if的性能低于v-show,因为v-if是切换真假DOM,v-show是使用css隐藏</section>'
 const expBoolean: boolean = true
 // 动态事件
 const event = 'click'
@@ -153,8 +158,8 @@ let chr1s_obj = {
   clickEvent() {
     console.log(this.text_dom);
   },
-  // 正常的js需要在clickEvent传入event，通过stopPropagation()阻止默认的冒泡
-  // VUE3中要阻止冒泡的话，使用@[event].stop="chr1s_obj.clickEvent()"即可
+  // 正常的js需要在clickEvent传入event,通过stopPropagation()阻止默认的冒泡
+  // VUE3中要阻止冒泡的话,使用@[event].stop="chr1s_obj.clickEvent()"即可
   parent() {
     console.log('冒泡触发父级事件');
   }
@@ -181,8 +186,8 @@ const bindId: string = 'bind-Id'
 
 .moveBox {
   position: fixed;
-  left: 50%;
-  top: 50%;
+  left: 10%;
+  top: 30%;
   transform: translate(-50%, -50%);
   width: 200px;
   height: 200px;

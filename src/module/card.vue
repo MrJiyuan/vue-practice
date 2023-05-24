@@ -5,7 +5,7 @@
             <div>副标题</div>
         </header>
         <section>
-            如果要把局部组件注册为全局组件，在main.ts中注册：<br>
+            如果要把局部组件注册为全局组件,在main.ts中注册：<br>
             import card from './components/card.vue'<br>
             const app = createApp(App)<br>
             app.component('card', card)<br>

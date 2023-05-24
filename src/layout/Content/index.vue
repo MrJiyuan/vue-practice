@@ -14,7 +14,7 @@
             <a-typography-title :level="2">10-插槽</a-typography-title>
             <slotComponent>
                 <template v-slot>
-                    为子组件传递一些模板片段，让子组件在它们的组件中渲染这些片段。
+                    为子组件传递一些模板片段,让子组件在它们的组件中渲染这些片段。
                     <a-typography-paragraph>
                         <blockquote>
                             匿名插槽
@@ -39,7 +39,7 @@
                 </template>
             </slotComponent>
             <component :is="dynamicComponents"></component>
-            <!-- 要使用异步组件，必须使用Suspense(vue3新增的内置组件) -->
+            <!-- 要使用异步组件,必须使用Suspense(vue3新增的内置组件) -->
             <Suspense>
                 <template #default>
                     <SyncVue>
@@ -57,6 +57,10 @@
             <provideComponent></provideComponent>
             <broData></broData>
             <imgLazyLoad></imgLazyLoad>
+            <cusHooks></cusHooks>
+            <globalValue></globalValue>
+            <nextTickTem></nextTickTem>
+            <environment></environment>
         </div>
 
     </div>
@@ -66,8 +70,8 @@
 import {
     ref, reactive
 } from 'vue'
-import direct from '../../components/1-direct.vue'
-import twoWayBinding from '../../components/2-twoWayBinding.vue';
+import direct from '@/components/1-direct.vue'
+import twoWayBinding from '@/components/2-twoWayBinding.vue';
 import refTemplate from '@/components/3-ref.vue';
 import reactiveTemplate from '@/components/4-reactive.vue';
 import toTemplate from "@/components/5-to.vue";
@@ -83,11 +87,15 @@ import { defineAsyncComponent } from 'vue';
 import provideComponent from '@/components/15-provide.vue'
 import broData from '@/components/16-broData.vue'
 import imgLazyLoad from '@/components/17-imgLazyLoad.vue'
+import cusHooks from '@/components/18-cusHooks.vue'
+import globalValue from '@/components/19-globalValue.vue'  // 引入全局变量
+import nextTickTem from '@/components/20-nextTick.vue'
+import environment from '@/components/21-environment.vue'
 
 let lifeCycleTemplateFlag = ref<Boolean>(false);
 
-//使用defineAsyncComponent函数进行一个引入
-//有两种书写风格，一种是直接传一个回调函数，然后通过回调函数继续使用import函数模式(此模式和引入的有所区别，能够写在代码逻辑里面的)
+// 使用defineAsyncComponent函数进行一个引入
+// 有两种书写风格,一种是直接传一个回调函数,然后通过回调函数继续使用import函数模式(此模式和引入的有所区别,能够写在代码逻辑里面的)
 const SyncVue = defineAsyncComponent(() => import('@/components/12-sync.vue'))//引入异步组件
 </script>
 <style lang="less" scoped>

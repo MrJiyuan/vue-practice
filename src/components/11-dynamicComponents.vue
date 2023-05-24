@@ -2,11 +2,11 @@
     <a-typography-title :level="2">11-动态组件</a-typography-title>
     <a-typography-paragraph>
         <blockquote>
-            让多个组件使用同一个挂载点，并动态切换，在挂载点使用component标签，然后使用v-bindis='组件'
+            让多个组件使用同一个挂载点,并动态切换,在挂载点使用component标签,然后使用v-bindis='组件'
         </blockquote>
         <blockquote>
-            a ?? b 如果 a 的值为 null 或 undefined，则返回 b 的值，否则返回 a 的值。
-            ??之能处理null和undefined，不能处理0，''，false
+            a ?? b 如果 a 的值为 null 或 undefined,则返回 b 的值,否则返回 a 的值。
+            ??之能处理null和undefined,不能处理0,'',false
         </blockquote>
     </a-typography-paragraph>
     <div style="display: flex;">

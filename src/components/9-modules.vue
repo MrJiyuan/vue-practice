@@ -3,11 +3,11 @@
     <div>
         <a-typography-paragraph>
             <blockquote>
-                局部组件：拆分一个页面中的多个模块，每个模块都是一个组件
+                局部组件：拆分一个页面中的多个模块,每个模块都是一个组件
                 <br>
-                全局组件：高频组件，可以在任何页面中使用
+                全局组件：高频组件,可以在任何页面中使用
                 <br>
-                递归组件：组件中调用自身，类似tree或者menu
+                递归组件：组件中调用自身,类似tree或者menu
                 <br>
             </blockquote>
         </a-typography-paragraph>
@@ -31,8 +31,8 @@
             &lt;script lang="ts" setup name="firstPage"&gt;<br>
             &lt;/script&gt;
         </blockquote>
-        <pre>需要注意，如果在递归组件中加入click事件，需要使用@click.stop阻止冒泡</pre>
-        <pre>如果要传入event事件，需要使用@click.stop="clickTap($event)</pre>
+        <pre>需要注意,如果在递归组件中加入click事件,需要使用@click.stop阻止冒泡</pre>
+        <pre>如果要传入event事件,需要使用@click.stop="clickTap($event)</pre>
     </a-typography-paragraph>
 
     <tree :data="TreeData"></tree>

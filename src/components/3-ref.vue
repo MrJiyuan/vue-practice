@@ -1,7 +1,7 @@
 <!--
  * @ Author: Chr1s
  * @ Create Time: 2023-03-15 13:19:15
- * @ Modified time: 2023-03-16 03:17:06
+ * @ Modified time: 2023-05-23 22:18:12
  * @ Description:
 -->
 
@@ -23,12 +23,12 @@
         <a-button type="primary" @click="changeShallowRef('Shallow')">shallowRef修改深层</a-button>
         <a-button type="dashed" @click="changeShallowRef('Shallow')">shallowRef修改第一层</a-button>
     </a-space>
-
-    <blockquote>
-        为什么要使用shallowRef? <br>
-        ref和reactive都属于递归监听，使所有属性都具备响应性，如果数据量大，非常消耗性能，非递归监听只会监听数据的第一层
-    </blockquote>
-
+    <a-typography-paragraph>
+        <blockquote>
+            为什么要使用shallowRef? <br>
+            ref和reactive都属于递归监听,使所有属性都具备响应性,如果数据量大,非常消耗性能,非递归监听只会监听数据的第一层
+        </blockquote>
+    </a-typography-paragraph>
     <a-divider orientation="left">ref和shallowRef在同一函数中使用</a-divider>
     <div>{{ _nameRef }}</div>
     <div>{{ _nameShallowRef }}</div>
@@ -68,7 +68,7 @@ const _nameRef = ref<C>({ name: '我是Ref' })
 const _nameIsRef = isRef(_nameRef)
 const _nameRefDeduction: Ref<C> = ref({ name: 'Chr1sRef' }) // *推荐类型比较复杂的时候使用这种方式推导类型
 const changeRef = () => {
-    _nameRef.value.name = 'Chr1stineRef'                    // 因为ref返回的是一个对象，所以必须加.value取值
+    _nameRef.value.name = 'Chr1stineRef'                    // 因为ref返回的是一个对象,所以必须加.value取值
     console.log('ref:' + _nameRef.value.name);
     console.log('_nameRef isRef?：' + isRef(_nameRef));
 }
@@ -76,8 +76,8 @@ const changeRef = () => {
 const _nameShallowRef = shallowRef({ name: '我是shallowRef' })
 const changeShallowRef = (which: string) => {
     which == 'Shallow' ?
-        _nameShallowRef.value.name = '我是未更新的视图'       // shallowRef修改深层属性时，并不会更新视图
-        : _nameShallowRef.value = { name: '我是更新后的视图' }; // 想要更新视图，必须给value赋值，直接替换整个对象
+        _nameShallowRef.value.name = '我是未更新的视图'       // shallowRef修改深层属性时,并不会更新视图
+        : _nameShallowRef.value = { name: '我是更新后的视图' }; // 想要更新视图,必须给value赋值,直接替换整个对象
 }
 
 // ref和shallowRef不可以一起写,否则会影响shallowRef造成视图的更新,原因是ref在源码中会调用triggerRef强制更新视图
@@ -139,7 +139,7 @@ const changeDebounceCustomRef = () => {
 
 }
 
-const domRef = ref<HTMLDivElement>() // 此处需要类型断言成HTMLDiv元素，否则value后获取不到相应的属性
+const domRef = ref<HTMLDivElement>() // 此处需要类型断言成HTMLDiv元素,否则value后获取不到相应的属性
 const getDomRef = () => {
     console.log(domRef.value?.innerHTML);
 

@@ -51,8 +51,8 @@ let listFor2 = reactive<{ arr: string[] }>({ arr: [] })
 const add = () => {
     setTimeout(() => {           // 模拟异步接口请求
         let res: string[] = ['CSGO', 'Apex', 'OW'];
-        // listFor = res         // reactive是proxy代理的一个对象，不可以直接赋值，否则会破坏proxy的结构
-        // console.log(listFor); // 可以打印出值，但是页面无数据
+        // listFor = res         // reactive是proxy代理的一个对象,不可以直接赋值,否则会破坏proxy的结构
+        // console.log(listFor); // 可以打印出值,但是页面无数据
         // *解决方案1:数组使用push与解构
         listFor.push(...res)
         console.log(listFor);
@@ -66,7 +66,7 @@ const showRead = () => {
     console.log(form, read); // Proxy(Object) {name: 'Chr1s', age: 23} *2
     form.name = 'chr1stine'
     console.log(form, read); // Proxy(Object) {name: 'chr1stine', age: 23} *2
-    // ↑说明readonly虽然不可直接修改，但修改原始对象会影响到readonly
+    // ↑说明readonly虽然不可直接修改,但修改原始对象会影响到readonly
 }
 
 let form_shallow: any = shallowReactive({
@@ -84,7 +84,7 @@ const editDeep = () => {
 }
 
 const editShallow = () => {
-    // shallowReactive与ref有共同问题，在此处使用reactive也会导致shallowReactive被修改
+    // shallowReactive与ref有共同问题,在此处使用reactive也会导致shallowReactive被修改
     form_shallow.foo = {
         name: '我是第一层的元素'
     }

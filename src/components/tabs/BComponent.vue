@@ -1,5 +1,5 @@
 <template>
-    <div>我在“砸金蛋”活动中一锤子下去砸爆了主播的蛋，你也来试试吧</div>
+    <div>我在“砸金蛋”活动中一锤子下去砸爆了主播的蛋,你也来试试吧</div>
     <div>
         <a-transfer v-model:target-keys="targetKeys" v-model:selected-keys="selectedKeys" :data-source="mockData"
             :titles="['Source', 'Target']" :render="item => item.title" :disabled="disabled" @change="handleChange"
